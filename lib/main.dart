@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 void main() {
@@ -19,7 +18,7 @@ class _ChartApp extends StatelessWidget {
 
 class _MyHomePage extends StatefulWidget {
   // ignore: prefer_const_constructors_in_immutables
-  _MyHomePage({Key key}) : super(key: key);
+  _MyHomePage({Key? key}) : super(key: key);
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -52,10 +51,11 @@ class _MyHomePageState extends State<_MyHomePage> {
             child: SfCartesianChart(
                 backgroundColor: Colors.white,
                 title: ChartTitle(text: 'Check-in time 22-Dec-2020'),
-                onAxisLabelRender: (args) {
+                axisLabelFormatter: (AxisLabelRenderDetails args) {
+                  late String text;
                   if (args.axisName == 'primaryYAxis') {
                     print(args.value);
-                    args.text = DateTime.fromMillisecondsSinceEpoch(
+                    text = DateTime.fromMillisecondsSinceEpoch(
                                 args.value.toInt())
                             .hour
                             .toString() +
@@ -67,7 +67,10 @@ class _MyHomePageState extends State<_MyHomePage> {
                         DateTime.fromMillisecondsSinceEpoch(args.value.toInt())
                             .second
                             .toString();
+                  } else {
+                    text = args.text;
                   }
+                  return ChartAxisLabel(text, args.textStyle);
                 },
                 // Also if you want to customize the data labels too to display the date time y-values then you can
                 // customize the data labels using the onDataLabelRender event.
@@ -95,7 +98,7 @@ class _MyHomePageState extends State<_MyHomePage> {
                       dataSource: chartData,
                       xValueMapper: (EmployeeData data, _) => data.empName,
                       yValueMapper: (EmployeeData data, _) {
-                        return data.checkinTime.millisecondsSinceEpoch;
+                        return data.checkinTime!.millisecondsSinceEpoch;
                       },
                       dataLabelSettings: DataLabelSettings(isVisible: true),
                       markerSettings: MarkerSettings(isVisible: true))
@@ -108,6 +111,6 @@ class _MyHomePageState extends State<_MyHomePage> {
 class EmployeeData {
   EmployeeData({this.empName, this.checkinTime});
 
-  final String empName;
-  final DateTime checkinTime;
+  final String? empName;
+  final DateTime? checkinTime;
 }

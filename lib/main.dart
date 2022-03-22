@@ -51,27 +51,7 @@ class _MyHomePageState extends State<_MyHomePage> {
             child: SfCartesianChart(
                 backgroundColor: Colors.white,
                 title: ChartTitle(text: 'Check-in time 22-Dec-2020'),
-                axisLabelFormatter: (AxisLabelRenderDetails args) {
-                  late String text;
-                  if (args.axisName == 'primaryYAxis') {
-                    print(args.value);
-                    text = DateTime.fromMillisecondsSinceEpoch(
-                                args.value.toInt())
-                            .hour
-                            .toString() +
-                        ':' +
-                        DateTime.fromMillisecondsSinceEpoch(args.value.toInt())
-                            .minute
-                            .toString() +
-                        ':' +
-                        DateTime.fromMillisecondsSinceEpoch(args.value.toInt())
-                            .second
-                            .toString();
-                  } else {
-                    text = args.text;
-                  }
-                  return ChartAxisLabel(text, args.textStyle);
-                },
+
                 // Also if you want to customize the data labels too to display the date time y-values then you can
                 // customize the data labels using the onDataLabelRender event.
                 onDataLabelRender: (args) {
@@ -90,6 +70,26 @@ class _MyHomePageState extends State<_MyHomePage> {
                 },
                 primaryXAxis: CategoryAxis(),
                 primaryYAxis: NumericAxis(
+                    axisLabelFormatter: (AxisLabelRenderDetails args) {
+                      late String text;
+                      print(args.value);
+                      text = DateTime.fromMillisecondsSinceEpoch(
+                                  args.value.toInt())
+                              .hour
+                              .toString() +
+                          ':' +
+                          DateTime.fromMillisecondsSinceEpoch(
+                                  args.value.toInt())
+                              .minute
+                              .toString() +
+                          ':' +
+                          DateTime.fromMillisecondsSinceEpoch(
+                                  args.value.toInt())
+                              .second
+                              .toString();
+
+                      return ChartAxisLabel(text, args.textStyle);
+                    },
                     title: AxisTitle(text: 'HH:MM:SS'),
                     rangePadding: ChartRangePadding.additional,
                     name: 'primaryYAxis'),

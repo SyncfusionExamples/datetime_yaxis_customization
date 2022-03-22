@@ -72,7 +72,6 @@ class _MyHomePageState extends State<_MyHomePage> {
                 primaryYAxis: NumericAxis(
                     axisLabelFormatter: (AxisLabelRenderDetails args) {
                       late String text;
-                      print(args.value);
                       text = DateTime.fromMillisecondsSinceEpoch(
                                   args.value.toInt())
                               .hour

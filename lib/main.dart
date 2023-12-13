@@ -56,15 +56,15 @@ class _MyHomePageState extends State<_MyHomePage> {
                 // customize the data labels using the onDataLabelRender event.
                 onDataLabelRender: (args) {
                   args.text = DateTime.fromMillisecondsSinceEpoch(
-                              int.parse(args.text))
+                              int.parse(args.text!))
                           .hour
                           .toString() +
                       ':' +
-                      DateTime.fromMillisecondsSinceEpoch(int.parse(args.text))
+                      DateTime.fromMillisecondsSinceEpoch(int.parse(args.text!))
                           .minute
                           .toString() +
                       ':' +
-                      DateTime.fromMillisecondsSinceEpoch(int.parse(args.text))
+                      DateTime.fromMillisecondsSinceEpoch(int.parse(args.text!))
                           .second
                           .toString();
                 },
@@ -92,7 +92,7 @@ class _MyHomePageState extends State<_MyHomePage> {
                     title: AxisTitle(text: 'HH:MM:SS'),
                     rangePadding: ChartRangePadding.additional,
                     name: 'primaryYAxis'),
-                series: <ChartSeries<EmployeeData, String>>[
+                series: <ColumnSeries<EmployeeData, String>>[
                   ColumnSeries<EmployeeData, String>(
                       dataSource: chartData,
                       xValueMapper: (EmployeeData data, _) => data.empName,
